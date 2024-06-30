@@ -37,7 +37,10 @@ fun UnitConverter(){
     Column {
         Text("UnConve")
          OutlinedTextField(value = "", onValueChange ={} )
+        Row {
 
+        }
+        Text(text = "Result:")
     }
 }
 
@@ -48,8 +51,6 @@ fun Greeting(name: String) {
 
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
-    UnConveTheme {
-        Greeting("Android")
-    }
+fun UnitConverterPreview() {
+    UnitConverter()
 }
