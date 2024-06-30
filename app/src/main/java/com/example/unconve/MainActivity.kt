@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -34,13 +35,9 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun UnitConverter(){
     Column {
-        Greeting("Element 1")
-        Greeting("Element 2")
-        Row {
-            Greeting("Element 3")
-            Greeting("Element 4")
-            Greeting("Element 5")
-        }
+        Text("UnConve")
+         OutlinedTextField(value = "", onValueChange ={} )
+
     }
 }
 
