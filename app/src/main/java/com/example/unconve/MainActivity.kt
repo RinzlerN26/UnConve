@@ -59,113 +59,124 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun UnitConverter(){
-    var inputVal by remember { mutableStateOf("")}
-    var outputVal by remember { mutableStateOf("")}
-    var inputUnit by remember { mutableStateOf("Meters")}
-    var outputUnit by remember { mutableStateOf("Meters")}
-    var iExpanded by remember { mutableStateOf(false)}
-    var oExpanded by remember { mutableStateOf(false)}
+fun UnitConverter() {
+    var inputVal by remember { mutableStateOf("") }
+    var outputVal by remember { mutableStateOf("") }
+    var inputUnit by remember { mutableStateOf("Meters") }
+    var outputUnit by remember { mutableStateOf("Meters") }
+    var iExpanded by remember { mutableStateOf(false) }
+    var oExpanded by remember { mutableStateOf(false) }
     val convFactor = remember { mutableStateOf(1.00) }
     val oconvFactor = remember { mutableStateOf(1.00) }
 
-    val customTextStyle=TextStyle(
+    val customTextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontSize = 16.sp,
         color = Color.Blue
     )
-    fun convUnit(){
-        val inpValueDouble=inputVal.toDoubleOrNull()?:0.0
-        val res=(inpValueDouble*convFactor.value*100.0/ oconvFactor.value).roundToInt()/100.0
-        outputVal=res.toString()
+
+    fun convUnit() {
+        val inpValueDouble = inputVal.toDoubleOrNull() ?: 0.0
+        val res =
+            (inpValueDouble * convFactor.value * 100.0 / oconvFactor.value).roundToInt() / 100.0
+        outputVal = res.toString()
     }
     Column(
-        modifier=Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("UnConve",style =
-        // customTextStyle
-        MaterialTheme.typography.h4
+        Text(
+            "UnConve", style =
+            // customTextStyle
+            MaterialTheme.typography.h4
         )
         Spacer(modifier = Modifier.height(16.dp))
-         OutlinedTextField(value = inputVal, onValueChange ={
-             inputVal=it
-             convUnit()
-            }, label = {Text("Enter Value")} )
+        OutlinedTextField(value = inputVal, onValueChange = {
+            inputVal = it
+            convUnit()
+        }, label = { Text("Enter Value") })
         Spacer(modifier = Modifier.height(16.dp))
         Row {
-            Box{
+            Box {
                 //Input Box
-                Button(onClick={iExpanded= true }){
+                Button(onClick = { iExpanded = true }) {
                     Text(text = inputUnit)
-                    Icon(Icons.Default.ArrowDropDown, contentDescription ="Arrow Down" )
+                    Icon(Icons.Default.ArrowDropDown, contentDescription = "Arrow Down")
                 }
-                DropdownMenu(expanded = iExpanded, onDismissRequest = { iExpanded=false }) {
+                DropdownMenu(expanded = iExpanded, onDismissRequest = { iExpanded = false }) {
                     DropdownMenuItem(onClick = {
-                        iExpanded=false
-                        inputUnit="Centimeters"
-                        convFactor.value=0.01
+                        iExpanded = false
+                        inputUnit = "Centimeters"
+                        convFactor.value = 0.01
                         convUnit()
                     }) {
                         Text("Centimeters")
                     }
                     DropdownMenuItem(onClick = {
-                        iExpanded=false
-                        inputUnit="Meters"
-                        convFactor.value=1.0
-                        convUnit()}) {
+                        iExpanded = false
+                        inputUnit = "Meters"
+                        convFactor.value = 1.0
+                        convUnit()
+                    }) {
                         Text("Meters")
                     }
                     DropdownMenuItem(onClick = {
-                        iExpanded=false
-                        inputUnit="Feet"
-                        convFactor.value=0.3048
-                        convUnit() }) {
+                        iExpanded = false
+                        inputUnit = "Feet"
+                        convFactor.value = 0.3048
+                        convUnit()
+                    }) {
                         Text("Feet")
                     }
                     DropdownMenuItem(onClick = {
-                        iExpanded=false
-                        inputUnit="Millimeters"
-                        convFactor.value=0.001
-                        convUnit() }) {
+                        iExpanded = false
+                        inputUnit = "Millimeters"
+                        convFactor.value = 0.001
+                        convUnit()
+                    }) {
                         Text("Millimeters")
                     }
                 }
             }
             Spacer(modifier = Modifier.width(16.dp))
-            Box{
+            Box {
                 //Output Box
-                Button(onClick={oExpanded= true }){
+                Button(onClick = { oExpanded = true }) {
                     Text(text = outputUnit)
-                    Icon(Icons.Default.ArrowDropDown, contentDescription ="Arrow Down" )
+                    Icon(Icons.Default.ArrowDropDown, contentDescription = "Arrow Down")
                 }
-                DropdownMenu(expanded = oExpanded, onDismissRequest = { oExpanded=false }) {
+                DropdownMenu(expanded = oExpanded, onDismissRequest = { oExpanded = false }) {
                     DropdownMenuItem(onClick = {
-                        oExpanded=false
-                        outputUnit="Centimeters"
-                        oconvFactor.value=0.01
+                        oExpanded = false
+                        outputUnit = "Centimeters"
+                        oconvFactor.value = 0.01
                         convUnit()
                     }) {
                         Text("Centimeters")
                     }
-                    DropdownMenuItem(onClick = {  oExpanded=false
-                        outputUnit="Meters"
-                        oconvFactor.value=1.00
-                        convUnit() }) {
+                    DropdownMenuItem(onClick = {
+                        oExpanded = false
+                        outputUnit = "Meters"
+                        oconvFactor.value = 1.00
+                        convUnit()
+                    }) {
                         Text("Meters")
                     }
-                    DropdownMenuItem(onClick = {  oExpanded=false
-                        outputUnit="Feet"
-                        oconvFactor.value=0.3048
-                        convUnit() }) {
+                    DropdownMenuItem(onClick = {
+                        oExpanded = false
+                        outputUnit = "Feet"
+                        oconvFactor.value = 0.3048
+                        convUnit()
+                    }) {
                         Text("Feet")
                     }
                     DropdownMenuItem(onClick = {
-                        oExpanded=false
-                        outputUnit="Millimeters"
-                        oconvFactor.value=0.001
-                        convUnit() }) {
+                        oExpanded = false
+                        outputUnit = "Millimeters"
+                        oconvFactor.value = 0.001
+                        convUnit()
+                    }) {
                         Text("Millimeters")
                     }
                 }
