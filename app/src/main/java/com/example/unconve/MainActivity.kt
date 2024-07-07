@@ -30,10 +30,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.Role.Companion.Button
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.unconve.ui.theme.UnConveTheme
 import kotlin.math.roundToInt
 
@@ -58,16 +62,21 @@ class MainActivity : ComponentActivity() {
 fun UnitConverter(){
     var inputVal by remember { mutableStateOf("")}
     var outputVal by remember { mutableStateOf("")}
-    var inputUnit by remember { mutableStateOf("Centimeters")}
+    var inputUnit by remember { mutableStateOf("Meters")}
     var outputUnit by remember { mutableStateOf("Meters")}
     var iExpanded by remember { mutableStateOf(false)}
     var oExpanded by remember { mutableStateOf(false)}
-    val convFactor = remember {
-        mutableStateOf(0.01)
-    }
+    val convFactor = remember { mutableStateOf(1.00) }
+    val oconvFactor = remember { mutableStateOf(1.00) }
+
+    val customTextStyle=TextStyle(
+        fontFamily = FontFamily.Default,
+        fontSize = 16.sp,
+        color = Color.Blue
+    )
     fun convUnit(){
         val inpValueDouble=inputVal.toDoubleOrNull()?:0.0
-        val res=(inpValueDouble*convFactor.value*100.0).roundToInt()/100.0
+        val res=(inpValueDouble*convFactor.value*100.0/ oconvFactor.value).roundToInt()/100.0
         outputVal=res.toString()
     }
     Column(
@@ -75,15 +84,21 @@ fun UnitConverter(){
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("UnConve")
+        Text("UnConve",style =
+        // customTextStyle
+        MaterialTheme.typography.h4
+        )
         Spacer(modifier = Modifier.height(16.dp))
-         OutlinedTextField(value = inputVal, onValueChange ={inputVal=it}, label = {Text("Enter Value")} )
+         OutlinedTextField(value = inputVal, onValueChange ={
+             inputVal=it
+             convUnit()
+            }, label = {Text("Enter Value")} )
         Spacer(modifier = Modifier.height(16.dp))
         Row {
             Box{
                 //Input Box
                 Button(onClick={iExpanded= true }){
-                    Text(text = "Select")
+                    Text(text = inputUnit)
                     Icon(Icons.Default.ArrowDropDown, contentDescription ="Arrow Down" )
                 }
                 DropdownMenu(expanded = iExpanded, onDismissRequest = { iExpanded=false }) {
@@ -122,25 +137,34 @@ fun UnitConverter(){
             Box{
                 //Output Box
                 Button(onClick={oExpanded= true }){
-                    Text(text = "Select")
+                    Text(text = outputUnit)
                     Icon(Icons.Default.ArrowDropDown, contentDescription ="Arrow Down" )
                 }
                 DropdownMenu(expanded = oExpanded, onDismissRequest = { oExpanded=false }) {
                     DropdownMenuItem(onClick = {
-
+                        oExpanded=false
+                        outputUnit="Centimeters"
+                        oconvFactor.value=0.01
+                        convUnit()
                     }) {
                         Text("Centimeters")
                     }
-                    DropdownMenuItem(onClick = { /*TODO*/ }) {
+                    DropdownMenuItem(onClick = {  oExpanded=false
+                        outputUnit="Meters"
+                        oconvFactor.value=1.00
+                        convUnit() }) {
                         Text("Meters")
                     }
-                    DropdownMenuItem(onClick = { /*TODO*/ }) {
+                    DropdownMenuItem(onClick = {  oExpanded=false
+                        outputUnit="Feet"
+                        oconvFactor.value=0.3048
+                        convUnit() }) {
                         Text("Feet")
                     }
                     DropdownMenuItem(onClick = {
-                        iExpanded=false
-                        inputUnit="Millimeters"
-                        convFactor.value=0.001
+                        oExpanded=false
+                        outputUnit="Millimeters"
+                        oconvFactor.value=0.001
                         convUnit() }) {
                         Text("Millimeters")
                     }
@@ -149,7 +173,7 @@ fun UnitConverter(){
 
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "Result:")
+        Text(text = "Result: $outputVal $outputUnit", style = MaterialTheme.typography.h5)
     }
 }
 
