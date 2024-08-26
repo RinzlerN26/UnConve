@@ -18,7 +18,7 @@ A unit converter app built in Kotlin with Jetpack Compose.
 1. Clone the repo.
    
    ```sh
-   git clone https://github.com/RinzlerN26/AyurCatal.git
+   git clone https://github.com/RinzlerN26/UnConve.git
    ```
    
 2. Run the app in android emulator using android studio.
