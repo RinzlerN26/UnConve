@@ -192,7 +192,7 @@ fun UnitConverter(viewModel: CounterViewModel) {
         Spacer(modifier = Modifier.height(16.dp))
         Text(text = "Result: $outputVal $outputUnit",fontSize = 15.sp)
         Spacer(modifier = Modifier.height(160.dp))
-        Text("MVVM Counter", fontSize = 20.sp,fontWeight = FontWeight.Bold)
+        Text("Counter", fontSize = 20.sp,fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(16.dp))
         Text(text = "Count: ${viewModel.count.value}", fontSize = 15.sp)
         Spacer(modifier = Modifier.height(16.dp))
