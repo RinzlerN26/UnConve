@@ -5,6 +5,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,12 +31,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.semantics.Role.Companion.Button
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
+//import androidx.compose.ui.graphics.Color
+//import androidx.compose.ui.platform.LocalContext
+//import androidx.compose.ui.res.fontResource
+//import androidx.compose.ui.semantics.Role.Companion.Button
+//import androidx.compose.ui.text.TextStyle
+//import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+//import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.unconve.ui.theme.UnConveTheme
@@ -45,13 +48,15 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val viewModel: CounterViewModel by viewModels()
             UnConveTheme {
                 // A surface container using the 'background' color from the theme
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    UnitConverter()
+                    UnitConverter(viewModel)
                 }
             }
         }
@@ -59,7 +64,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun UnitConverter() {
+fun UnitConverter(viewModel: CounterViewModel) {
     var inputVal by remember { mutableStateOf("") }
     var outputVal by remember { mutableStateOf("") }
     var inputUnit by remember { mutableStateOf("Meters") }
@@ -69,11 +74,11 @@ fun UnitConverter() {
     val convFactor = remember { mutableStateOf(1.00) }
     val oconvFactor = remember { mutableStateOf(1.00) }
 
-    val customTextStyle = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontSize = 16.sp,
-        color = Color.Blue
-    )
+//    val customTextStyle = TextStyle(
+//        fontFamily = FontFamily.Default,
+//        fontSize = 16.sp,
+//        color = Color.Blue
+//    )
 
     fun convUnit() {
         val inpValueDouble = inputVal.toDoubleOrNull() ?: 0.0
@@ -89,7 +94,8 @@ fun UnitConverter() {
         Text(
             "UnConve", style =
             // customTextStyle
-            MaterialTheme.typography.h4
+            MaterialTheme.typography.h5,
+            fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(value = inputVal, onValueChange = {
@@ -184,17 +190,22 @@ fun UnitConverter() {
 
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "Result: $outputVal $outputUnit", style = MaterialTheme.typography.h5)
+        Text(text = "Result: $outputVal $outputUnit",fontSize = 15.sp)
+        Spacer(modifier = Modifier.height(160.dp))
+        Text("MVVM Counter", fontSize = 20.sp,fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(text = "Count: ${viewModel.count.value}", fontSize = 15.sp)
+        Spacer(modifier = Modifier.height(16.dp))
+        Row{
+            Button(onClick={viewModel.increment()}){
+                Text("+")
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            Button(onClick={viewModel.decrement()}){
+                Text("-")
+            }
+        }
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
 
-@Preview(showBackground = true)
-@Composable
-fun UnitConverterPreview() {
-    UnitConverter()
-}
