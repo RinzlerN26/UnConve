@@ -21,7 +21,7 @@ A unit converter and a counter app built in Kotlin with Jetpack Compose.
    git clone https://github.com/RinzlerN26/UnConve.git
    ```
    
-2. Run the app in android emulator using android studio.
+2. Run the app using android studio.
    
 
 
