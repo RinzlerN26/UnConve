@@ -11,9 +11,9 @@ class CounterViewModel:ViewModel() {
     val count: MutableState<Int> = _count
 
     fun increment(){
-        _count.value++;
+        _count.value++
     }
     fun decrement(){
-        _count.value--;
+        _count.value--
     }
 }
