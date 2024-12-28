@@ -1,5 +1,5 @@
 # UnConve
-A unit converter app built in Kotlin with Jetpack Compose.
+A unit converter and a counter app built in Kotlin with Jetpack Compose.
 
 ### Built With
 
